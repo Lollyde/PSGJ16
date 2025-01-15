@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=3 uid="uid://dg2a5feb15vop"]
+
+[ext_resource type="Texture2D" uid="uid://t1ais30ws5u5" path="res://assets/tchaff-spritesheet.png" id="1_dp12m"]
+[ext_resource type="Script" path="res://tchaff.gd" id="1_go777"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc8ge"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(0, 128, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yg2kv"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(126, 128, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7g7r"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(0, 0, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohcje"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(126, 0, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3gmp"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(0, 256, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82tp7"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(126, 256, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmndi"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(0, 384, 126, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eay2"]
+atlas = ExtResource("1_dp12m")
+region = Rect2(126, 384, 126, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wp0mb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc8ge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yg2kv")
+}],
+"loop": true,
+"name": &"wobble_down",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7g7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohcje")
+}],
+"loop": true,
+"name": &"wobble_left",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3gmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82tp7")
+}],
+"loop": true,
+"name": &"wobble_right",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmndi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1eay2")
+}],
+"loop": true,
+"name": &"wobble_up",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7smyb"]
+size = Vector2(48, 56)
+
+[node name="Tchaff" type="CharacterBody2D"]
+position = Vector2(187, 186)
+scale = Vector2(3, 3)
+script = ExtResource("1_go777")
+speed = 250
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wp0mb")
+animation = &"wobble_right"
+offset = Vector2(2, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_7smyb")

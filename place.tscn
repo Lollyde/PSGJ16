@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtlj5r02l3t3v"]
+
+[sub_resource type="Environment" id="Environment_tdoct"]
+background_mode = 1
+background_color = Color(0.470593, 0.555418, 0.824932, 1)
+
+[node name="place" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tdoct")

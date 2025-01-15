@@ -1,10 +1,14 @@
-extends CharacterBody2D
+extends Area2D
+
+signal hit
 
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	#hide()
+	# reenable that when ready for the game to like...exist (if i choose to follow the structure)
 	
 func _process(delta):
 	var velocity = Vector2.ZERO
@@ -45,3 +49,15 @@ func _process(delta):
 				$AnimatedSprite2D.rotation_degrees = +45
 			elif velocity.y < 0: # else if moving up
 				$AnimatedSprite2D.rotation_degrees = -45
+
+
+func _on_body_entered(_body: Node2D) -> void:
+	hide() # Player disappears after being hit.
+	hit.emit()
+	# Must be deferred as we can't change physics properties on a physics callback.
+	$CollisionShape2D.set_deferred("disabled", true)
+
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false

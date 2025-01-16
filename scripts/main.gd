@@ -4,9 +4,7 @@ extends Node
 var score
 
 func _ready():
-	# pass
-	# automatically start a new game for testing purposes
-	newGame()
+	pass
 
 func _on_tchaff_hit() -> void:
 	$ScoreTimer.stop()

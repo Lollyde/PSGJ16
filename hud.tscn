@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://xljnuuedrcyy"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_w3xm3"]
+[ext_resource type="FontFile" uid="uid://cbfm0dhlij400" path="res://assets/CherryBombOne-Regular.ttf" id="1_xyxky"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_w3xm3")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 453.0
+offset_bottom = 261.0
+theme_override_colors/font_shadow_color = Color(0.540266, 0.744403, 0.591181, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 20
+theme_override_fonts/font = ExtResource("1_xyxky")
+theme_override_font_sizes/font_size = 180
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -717.0
+offset_top = -215.5
+offset_right = 717.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.6365, 0.95, 0.87685, 1)
+theme_override_fonts/font = ExtResource("1_xyxky")
+theme_override_font_sizes/font_size = 160
+text = "don't eat banans!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -331.5
+offset_top = -495.0
+offset_right = 331.5
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(264, 168)
+size_flags_vertical = 0
+theme_override_colors/font_hover_pressed_color = Color(0.772549, 0.423529, 0.960784, 1)
+theme_override_colors/font_hover_color = Color(0.77184, 0.4224, 0.96, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.6493, 0.258, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.802667, 0.68, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_fonts/font = ExtResource("1_xyxky")
+theme_override_font_sizes/font_size = 200
+text = "PLAY"
+flat = true
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

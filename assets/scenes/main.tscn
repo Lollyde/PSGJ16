@@ -1,8 +1,55 @@
-[gd_scene load_steps=2 format=3 uid="uid://cv2vje03mntt2"]
+[gd_scene load_steps=4 format=3 uid="uid://cv2vje03mntt2"]
 
 [ext_resource type="PackedScene" uid="uid://dak1k1ke88bo2" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
+[ext_resource type="Texture2D" uid="uid://cjc5p501coxdu" path="res://assets/textures/Untitled.png" id="2_p8lk8"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fba5q"]
+distance = 13.245
 
 [node name="main" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("1_r8ihg")]
+z_index = 1
 position = Vector2(587, 294)
+
+[node name="world boundary" type="Node" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="world boundary"]
+position = Vector2(583, 449)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world boundary/StaticBody2D"]
+scale = Vector2(2.265, 2.265)
+shape = SubResource("WorldBoundaryShape2D_fba5q")
+one_way_collision_margin = 13.8
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="world boundary"]
+position = Vector2(360, 350)
+rotation = 1.57079
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world boundary/StaticBody2D2"]
+scale = Vector2(2.265, 2.265)
+shape = SubResource("WorldBoundaryShape2D_fba5q")
+one_way_collision_margin = 13.8
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="world boundary"]
+position = Vector2(586, 134)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world boundary/StaticBody2D3"]
+scale = Vector2(2.265, 2.265)
+shape = SubResource("WorldBoundaryShape2D_fba5q")
+one_way_collision_margin = 13.8
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="world boundary"]
+position = Vector2(803, 301)
+rotation = -1.57081
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world boundary/StaticBody2D4"]
+scale = Vector2(2.265, 2.265)
+shape = SubResource("WorldBoundaryShape2D_fba5q")
+one_way_collision_margin = 13.8
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(581.5, 291.5)
+scale = Vector2(0.774, 0.522)
+texture = ExtResource("2_p8lk8")

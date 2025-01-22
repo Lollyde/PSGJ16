@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cv2vje03mntt2"]
+[gd_scene load_steps=5 format=3 uid="uid://cv2vje03mntt2"]
 
 [ext_resource type="PackedScene" uid="uid://dak1k1ke88bo2" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
 [ext_resource type="Texture2D" uid="uid://cjc5p501coxdu" path="res://assets/textures/Untitled.png" id="2_p8lk8"]
+[ext_resource type="PackedScene" uid="uid://cciwfql7hvq38" path="res://assets/scenes/debugui.tscn" id="3_6nh7f"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fba5q"]
 distance = 13.245
@@ -53,3 +54,5 @@ one_way_collision_margin = 13.8
 position = Vector2(581.5, 291.5)
 scale = Vector2(0.774, 0.522)
 texture = ExtResource("2_p8lk8")
+
+[node name="debugui" parent="." instance=ExtResource("3_6nh7f")]

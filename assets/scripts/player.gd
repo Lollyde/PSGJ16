@@ -9,8 +9,10 @@ enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAI
 
 var current_mode: move_state = move_state.WALKING
 
+func _debug_change_mode(index: int):
+	current_mode = index
+
 func _physics_process(delta: float) -> void:
-	
 	match current_mode:
 		move_state.WALKING:
 			walking_movement(delta)
@@ -22,7 +24,6 @@ func _physics_process(delta: float) -> void:
 			pass
 		move_state.POWER_WHEELCHAIR:
 			pass
-		
 	move_and_slide()
 
 func walking_movement(delta: float):

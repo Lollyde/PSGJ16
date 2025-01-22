@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dak1k1ke88bo2"]
 
-[ext_resource type="Script" path="res://assets/scripts/player_crutches.gd" id="1_xxek4"]
+[ext_resource type="Script" path="res://assets/scripts/player.gd" id="1_xxek4"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d4yye"]
 size = Vector2(50, 50)

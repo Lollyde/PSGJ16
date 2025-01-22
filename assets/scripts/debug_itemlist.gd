@@ -5,6 +5,7 @@ var player
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAIR
+	self.auto_height = true
 	add_item("WALKING", null, true)
 	add_item("CRUTCHES", null, true)
 	add_item("ROLLATOR", null, true)
@@ -19,6 +20,6 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_item_activated(index: int) -> void:
+func change_movement_mode(index: int) -> void:
 	get_node("../../Player/CharacterBody2D")._debug_change_mode(index)
 	pass

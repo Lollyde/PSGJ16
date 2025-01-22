@@ -16,7 +16,6 @@ radius = 30.0
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 motion_mode = 1
 script = ExtResource("1_xxek4")
-offset_amount = 50
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = SubResource("PlaceholderTexture2D_d4yye")

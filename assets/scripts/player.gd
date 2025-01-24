@@ -2,11 +2,13 @@ extends CharacterBody2D
 
 
 @export var walking_speed := 400
+
 @export var crutches_turn_degrees := 15
 @export var crutches_offset_amount := 20
-@export var rollator_speed := 300
-@export var rollator_turn_degrees := 15
-@export var rollator_offset_amount := 20
+
+@export var manual_wheelchair_speed := 800
+@export var manual_wheelchair_turn_degrees := 20
+@export var manual_wheelchair_offset_amount := 20
 
 enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAIR}
 
@@ -22,11 +24,11 @@ func _physics_process(delta: float) -> void:
 		move_state.CRUTCHES:
 			crutches_movement(delta)
 		move_state.ROLLATOR:
-			self.rotate(PI / -2) #workaround, dont change
-			rollator_movement(delta)
-			self.rotate(PI / 2) #workaround, dont change
-		move_state.MANUAL_WHEELCHAIR:
 			pass
+		move_state.MANUAL_WHEELCHAIR:
+			self.rotate(PI / -2) #workaround, dont change
+			manual_wheelchair_movement(delta)
+			self.rotate(PI / 2) #workaround, dont change
 		move_state.POWER_WHEELCHAIR:
 			pass
 	move_and_slide()
@@ -67,36 +69,36 @@ func crutches_movement(_delta: float):
 	elif Input.is_action_just_pressed("move_a"):
 		rotate_with_offset(-crutches_turn_degrees, true, crutches_offset_amount)
 
-func rollator_movement(_delta: float):
+func manual_wheelchair_movement(_delta: float):
 	#self.velocity = Vector2.ZERO
 	# gotta have an input for *both* sides!!
 	if Input.is_action_just_pressed("move_q"):
 		if Input.is_action_pressed("move_o"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * rollator_speed
+			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
 			pass
 		elif Input.is_action_pressed("move_l"):
-			rotate_with_offset(rollator_turn_degrees, true, rollator_offset_amount)
+			rotate_with_offset(manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
 			pass
 	elif Input.is_action_just_pressed("move_a"):
 		if Input.is_action_pressed("move_o"):
-			rotate_with_offset(-rollator_turn_degrees, true, rollator_offset_amount)
+			rotate_with_offset(-manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
 			pass
 		elif Input.is_action_pressed("move_l"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * rollator_speed * -1
+			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
 			pass
 	elif Input.is_action_just_pressed("move_o"):
 		if Input.is_action_pressed("move_q"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * rollator_speed
+			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
 			pass
 		elif Input.is_action_pressed("move_a"):
-			rotate_with_offset(-rollator_turn_degrees, false, rollator_offset_amount)
+			rotate_with_offset(-manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
 			pass
 	elif Input.is_action_just_pressed("move_l"):
 		if Input.is_action_pressed("move_q"):
-			rotate_with_offset(rollator_turn_degrees, false, rollator_offset_amount)
+			rotate_with_offset(manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
 			pass
 		elif Input.is_action_pressed("move_a"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * rollator_speed * -1
+			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
 			pass
 	
 	self.velocity *= 0.8

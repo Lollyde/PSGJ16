@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dak1k1ke88bo2"]
+
+[ext_resource type="Script" path="res://assets/scripts/player.gd" id="1_xxek4"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d4yye"]
+size = Vector2(50, 50)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yvy3h"]
+size = Vector2(5, 5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s576t"]
+radius = 30.0
+
+[node name="Player" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+motion_mode = 1
+script = ExtResource("1_xxek4")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = SubResource("PlaceholderTexture2D_d4yye")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CharacterBody2D"]
+texture = SubResource("PlaceholderTexture2D_yvy3h")
+offset = Vector2(0, -55)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_s576t")

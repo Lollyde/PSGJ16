@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://koetlr64cs5i"]
+
+[ext_resource type="Texture2D" uid="uid://dltqftmecfe2o" path="res://assets/textures/map_placeholder.png" id="1_3psfn"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_50dak"]
+
+[node name="placeholder_place" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3psfn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_50dak")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(-2495, 2495, -2495, -2495, 2495, -2495, 2495, 2495)

@@ -21,5 +21,5 @@ func _process(_delta: float) -> void:
 
 
 func change_movement_mode(index: int) -> void:
-	get_node("../../Player/CharacterBody2D")._debug_change_mode(index)
+	get_node("/root/main/player")._debug_change_mode(index)
 	pass

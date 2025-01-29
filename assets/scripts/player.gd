@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 @export var crutches_turn_degrees := 15
 @export var crutches_offset_amount := 20
+@export var rollator_speed := 200
+@export var rollator_turn := 45
 @export var manual_wheelchair_speed := 800
 @export var manual_wheelchair_turn_degrees := 10
 @export var manual_wheelchair_offset_amount := 20
@@ -71,10 +73,27 @@ func crutches_movement(_delta: float):
 	elif Input.is_action_just_pressed("crutch_left_backward"):
 		rotate_with_offset(-crutches_turn_degrees, true, crutches_offset_amount)
 
-# TODO: impl rollator
-func rollator_movement(_delta: float):
+func rollator_movement(delta: float):
 	
-	pass
+	var vel = Vector2.ZERO
+	var rot = 0
+	if Input.is_action_pressed("rollator_left_push"):
+		if Input.is_action_pressed("rollator_right_push"):
+			vel.y -= 1
+		elif Input.is_action_pressed("rollator_right_pull"):
+			rot += rollator_turn
+	elif Input.is_action_pressed("rollator_left_pull"):
+		if Input.is_action_pressed("rollator_right_pull"):
+			vel.y += 1
+		elif Input.is_action_pressed("rollator_right_push"):
+			rot -= rollator_turn
+			
+	if rot != 0:
+		self.rotation_degrees += rot * delta
+	if vel.length() > 0:
+		vel = vel.rotated(self.rotation).normalized() * rollator_speed
+	
+	position += vel * delta
 
 func manual_wheelchair_movement(_delta: float):
 	#self.velocity = Vector2.ZERO

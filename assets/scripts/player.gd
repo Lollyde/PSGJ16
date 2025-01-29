@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-
 @export var walking_speed := 400
-
 @export var crutches_turn_degrees := 15
 @export var crutches_offset_amount := 20
 @export var rollator_speed := 200
@@ -13,12 +11,16 @@ extends CharacterBody2D
 @export var power_wheelchair_speed := 300
 @export var power_wheelchair_turn = 90
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAIR}
 
 var current_mode: move_state = move_state.WALKING
 
+
 func _debug_change_mode(index: int):
 	current_mode = index as move_state
+	print("switching to state: " + str(index as move_state))
 
 func _physics_process(delta: float) -> void:
 	match current_mode:
@@ -51,6 +53,9 @@ func walking_movement(delta: float):
 	if vel.length() > 0:
 		vel = vel.normalized() * walking_speed
 		self.rotation = vel.rotated(PI/2).angle()
+		play_or_continue_animation("anim_walking_moving")
+	else:
+		play_or_continue_animation("anim_walking_idle")
 	
 	position += vel * delta
 
@@ -88,6 +93,25 @@ func rollator_movement(delta: float):
 		elif Input.is_action_pressed("rollator_right_push"):
 			rot -= rollator_turn
 			
+			
+	# handle animations seperately:
+	if rot == 0 && vel.length() == 0:
+		# no input
+		play_or_continue_animation("anim_rollator_idle")
+	elif rot != 0 && vel.length() == 0:
+		# turn only
+		if rot > 0:
+			play_or_continue_animation("anim_rollator_turn_right")
+		else:
+			play_or_continue_animation("anim_rollator_turn_left")
+	elif vel.length() > 0:
+		# moving
+		if vel.y < 0:
+			play_or_continue_animation("anim_rollator_forward")
+		else:
+			play_or_continue_animation("anim_rollator_backward")
+	
+	
 	if rot != 0:
 		self.rotation_degrees += rot * delta
 	if vel.length() > 0:
@@ -98,34 +122,49 @@ func rollator_movement(delta: float):
 func manual_wheelchair_movement(_delta: float):
 	#self.velocity = Vector2.ZERO
 	# gotta have an input for *both* sides!!
+	var rot = 0 # tracking for animation purposes
+	var vel = 0 # tracking for animation purposes
 	if Input.is_action_just_pressed("wheelchair_left_forward"):
 		if Input.is_action_pressed("wheelchair_right_forward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
-			pass
+			vel = 1
 		elif Input.is_action_pressed("wheelchair_right_backward"):
 			rotate_with_offset(manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
-			pass
+			rot = 1
 	elif Input.is_action_just_pressed("wheelchair_left_backward"):
 		if Input.is_action_pressed("wheelchair_right_forward"):
 			rotate_with_offset(-manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
-			pass
+			rot = 1
 		elif Input.is_action_pressed("wheelchair_right_backward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
-			pass
+			vel = -1
 	elif Input.is_action_just_pressed("wheelchair_right_forward"):
 		if Input.is_action_pressed("wheelchair_left_forward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
-			pass
+			vel = 1
 		elif Input.is_action_pressed("wheelchair_left_backward"):
 			rotate_with_offset(-manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
-			pass
+			rot = -1
 	elif Input.is_action_just_pressed("wheelchair_right_backward"):
 		if Input.is_action_pressed("wheelchair_left_forward"):
 			rotate_with_offset(manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
-			pass
+			rot = -1
 		elif Input.is_action_pressed("wheelchair_left_backward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
-			pass
+			vel = -1
+	
+	if vel != 0:
+		if vel > 0:
+			play_or_continue_animation("anim_manual_forward")
+		else: 
+			play_or_continue_animation("anim_manual_backward")
+	elif rot != 0:
+		if rot > 0:
+			play_or_continue_animation("anim_manual_turn_right")
+		else:
+			play_or_continue_animation("anim_manual_turn_left")
+	else:
+		play_or_continue_animation("anim_manual_idle")
 	
 	self.velocity *= 0.8
 	if self.velocity.length() < 30:
@@ -151,6 +190,21 @@ func power_wheelchair_movement(delta: float):
 		rot -= power_wheelchair_turn
 	elif Input.is_action_pressed("pwr_rotate_right"):
 		rot += power_wheelchair_turn
+	
+	# handle animations before movement
+	if rot != 0:
+		if (rot > 0 && vel.y <= 0) || (rot < 0 && vel.y > 0): #need to swap rotation direction when going backwards
+			play_or_continue_animation("anim_power_turn_right")
+		else:
+			play_or_continue_animation("anim_power_turn_left")
+	elif vel.y != 0:
+		if vel.y < 0:
+			play_or_continue_animation("anim_power_forward")
+		else:
+			play_or_continue_animation("anim_power_backward")
+	else:
+		play_or_continue_animation("anim_power_idle")
+	
 	
 	# handle rotation changes before velocity changes
 	if rot != 0:
@@ -181,3 +235,8 @@ func move_left(offset_amount: float):
 func move_right(offset_amount: float):
 	var right_vec = Vector2(1, 0).rotated(self.rotation) * offset_amount
 	self.translate(right_vec)
+
+func play_or_continue_animation(anim: String):
+	if sprite.animation != anim:
+		print("switching to anim: " + anim)
+		sprite.play(anim)

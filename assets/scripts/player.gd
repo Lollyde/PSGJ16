@@ -79,32 +79,32 @@ func rollator_movement(_delta: float):
 func manual_wheelchair_movement(_delta: float):
 	#self.velocity = Vector2.ZERO
 	# gotta have an input for *both* sides!!
-	if Input.is_action_just_pressed("move_q"):
-		if Input.is_action_pressed("move_o"):
+	if Input.is_action_just_pressed("wheelchair_left_forward"):
+		if Input.is_action_pressed("wheelchair_right_forward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
 			pass
-		elif Input.is_action_pressed("move_l"):
+		elif Input.is_action_pressed("wheelchair_right_backward"):
 			rotate_with_offset(manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
 			pass
-	elif Input.is_action_just_pressed("move_a"):
-		if Input.is_action_pressed("move_o"):
+	elif Input.is_action_just_pressed("wheelchair_left_backward"):
+		if Input.is_action_pressed("wheelchair_right_forward"):
 			rotate_with_offset(-manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
 			pass
-		elif Input.is_action_pressed("move_l"):
+		elif Input.is_action_pressed("wheelchair_right_backward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
 			pass
-	elif Input.is_action_just_pressed("move_o"):
-		if Input.is_action_pressed("move_q"):
+	elif Input.is_action_just_pressed("wheelchair_right_forward"):
+		if Input.is_action_pressed("wheelchair_left_forward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
 			pass
-		elif Input.is_action_pressed("move_a"):
+		elif Input.is_action_pressed("wheelchair_left_backward"):
 			rotate_with_offset(-manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
 			pass
-	elif Input.is_action_just_pressed("move_l"):
-		if Input.is_action_pressed("move_q"):
+	elif Input.is_action_just_pressed("wheelchair_right_backward"):
+		if Input.is_action_pressed("wheelchair_left_forward"):
 			rotate_with_offset(manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
 			pass
-		elif Input.is_action_pressed("move_a"):
+		elif Input.is_action_pressed("wheelchair_left_backward"):
 			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
 			pass
 	

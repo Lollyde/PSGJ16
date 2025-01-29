@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 @export var crutches_turn_degrees := 15
 @export var crutches_offset_amount := 20
+@export var rollator_speed := 200
+@export var rollator_turn := 45
 @export var manual_wheelchair_speed := 800
 @export var manual_wheelchair_turn_degrees := 10
 @export var manual_wheelchair_offset_amount := 20
@@ -16,7 +18,7 @@ enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAI
 var current_mode: move_state = move_state.WALKING
 
 func _debug_change_mode(index: int):
-	current_mode = index
+	current_mode = index as move_state
 
 func _physics_process(delta: float) -> void:
 	match current_mode:
@@ -36,21 +38,21 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func walking_movement(delta: float):
-	var velocity = Vector2.ZERO
+	var vel = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
+		vel.x += 1
 	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
+		vel.x -= 1
 	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
+		vel.y += 1
 	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
+		vel.y -= 1
 
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * walking_speed
-		self.rotation = velocity.rotated(PI/2).angle()
+	if vel.length() > 0:
+		vel = vel.normalized() * walking_speed
+		self.rotation = vel.rotated(PI/2).angle()
 	
-	position += velocity * delta
+	position += vel * delta
 
 func crutches_movement(_delta: float): 
 	# basic idea: 
@@ -71,10 +73,27 @@ func crutches_movement(_delta: float):
 	elif Input.is_action_just_pressed("crutch_left_backward"):
 		rotate_with_offset(-crutches_turn_degrees, true, crutches_offset_amount)
 
-# TODO: impl rollator
-func rollator_movement(_delta: float):
+func rollator_movement(delta: float):
 	
-	pass
+	var vel = Vector2.ZERO
+	var rot = 0
+	if Input.is_action_pressed("rollator_left_push"):
+		if Input.is_action_pressed("rollator_right_push"):
+			vel.y -= 1
+		elif Input.is_action_pressed("rollator_right_pull"):
+			rot += rollator_turn
+	elif Input.is_action_pressed("rollator_left_pull"):
+		if Input.is_action_pressed("rollator_right_pull"):
+			vel.y += 1
+		elif Input.is_action_pressed("rollator_right_push"):
+			rot -= rollator_turn
+			
+	if rot != 0:
+		self.rotation_degrees += rot * delta
+	if vel.length() > 0:
+		vel = vel.rotated(self.rotation).normalized() * rollator_speed
+	
+	position += vel * delta
 
 func manual_wheelchair_movement(_delta: float):
 	#self.velocity = Vector2.ZERO
@@ -114,36 +133,36 @@ func manual_wheelchair_movement(_delta: float):
 
 func power_wheelchair_movement(delta: float):
 	# essentially fancy wasd tank controls
-	var velocity = Vector2.ZERO # exclusively for forward/backward
-	var rotation = 0
+	var vel = Vector2.ZERO # exclusively for forward/backward
+	var rot = 0
 	if Input.is_action_pressed("pwr_forward"):
-		velocity.y -= 1
+		vel.y -= 1
 		if Input.is_action_pressed("pwr_forward_right"):
-			rotation += power_wheelchair_turn
+			rot += power_wheelchair_turn
 		elif Input.is_action_pressed("pwr_forward_left"):
-			rotation -= power_wheelchair_turn
+			rot -= power_wheelchair_turn
 	elif Input.is_action_pressed("pwr_back"):
-		velocity.y += 1
+		vel.y += 1
 		if Input.is_action_pressed("pwr_back_right"):
-			rotation -= power_wheelchair_turn
+			rot -= power_wheelchair_turn
 		elif Input.is_action_pressed("pwr_back_left"):
-			rotation += power_wheelchair_turn
+			rot += power_wheelchair_turn
 	elif Input.is_action_pressed("pwr_rotate_left"):
-		rotation -= power_wheelchair_turn
+		rot -= power_wheelchair_turn
 	elif Input.is_action_pressed("pwr_rotate_right"):
-		rotation += power_wheelchair_turn
+		rot += power_wheelchair_turn
 	
 	# handle rotation changes before velocity changes
-	if rotation != 0:
-		self.rotation_degrees += rotation * delta
+	if rot != 0:
+		self.rotation_degrees += rot * delta
 		
-	velocity = velocity.rotated(self.rotation)
+	vel = vel.rotated(self.rotation)
 	
-	if velocity.length() > 0:
+	if vel.length() > 0:
 		# normalization not needed because the movement vector can only ever be of 1 or 0 length
-		velocity *= power_wheelchair_speed
+		vel *= power_wheelchair_speed
 		
-	position += velocity * delta
+	position += vel * delta
 
 func rotate_with_offset(turn_degrees: float, offset_right: bool, offset: float):
 	if offset_right:

@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @export var walking_speed := 400
 @export var crutches_turn_degrees := 15
-#@export var crutches_offset_amount := 20
 @export var crutches_speed := 300
 @export var crutches_walking_turn := 20.0
 @export var crutches_requested_speed := 0.0
@@ -27,8 +26,22 @@ var last_crutches_direction := 0
 var crutches_currently_turning := false
 
 func _debug_change_mode(index: int):
-	current_mode = index as move_state
 	print("switching to state: " + str(index as move_state))
+	change_mode(index)
+	
+func change_mode(index: int):
+	current_mode = index as move_state
+	match current_mode:
+		move_state.WALKING:
+			sprite.play("anim_walking_idle")
+		move_state.CRUTCHES:
+			sprite.play("anim_crutch_idle")
+		move_state.ROLLATOR:
+			sprite.play("anim_rollator_idle")
+		move_state.MANUAL_WHEELCHAIR:
+			sprite.play("anim_manual_idle")
+		move_state.POWER_WHEELCHAIR:
+			sprite.play("anim_power_idle")
 
 func _physics_process(delta: float) -> void:
 	match current_mode:
@@ -68,8 +81,6 @@ func walking_movement(delta: float):
 	position += vel * delta
 
 func crutches_movement(delta: float):
-	
-	
 	if Input.is_action_just_pressed("crutch_right_forward"):
 		if last_crutches_direction != 1:
 			crutches_currently_turning = true
@@ -113,10 +124,6 @@ func crutches_movement(delta: float):
 	if crutches_currently_turning or last_crutches_direction != 1:
 		speed_modifier *= 0.2
 	self.position += vel * speed_modifier
-	print("===")
-	print("turn: " + str(crutches_requested_turn))
-	print("speed: " + str(crutches_requested_speed))
-	
 	
 func rollator_movement(delta: float):
 	
@@ -234,25 +241,7 @@ func power_wheelchair_movement(delta: float):
 		
 	position += vel * delta
 
-func rotate_with_offset(turn_degrees: float, offset_right: bool, offset: float):
-	if offset_right:
-		self.move_right(offset)
-		self.rotation_degrees += turn_degrees
-		self.move_left(offset)
-	else:
-		self.move_left(offset)
-		self.rotation_degrees += turn_degrees
-		self.move_right(offset)
-
-func move_left(offset_amount: float):
-	var left_vec = Vector2(-1, 0).rotated(self.rotation) * offset_amount
-	self.translate(left_vec)
-	
-func move_right(offset_amount: float):
-	var right_vec = Vector2(1, 0).rotated(self.rotation) * offset_amount
-	self.translate(right_vec)
-
 func play_or_continue_animation(anim: String):
 	if sprite.animation != anim:
-		print("switching to anim: " + anim)
+		#print("switching to anim: " + anim)
 		sprite.play(anim)

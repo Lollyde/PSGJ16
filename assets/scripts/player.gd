@@ -5,18 +5,20 @@ extends CharacterBody2D
 @export var crutches_offset_amount := 20
 @export var rollator_speed := 200
 @export var rollator_turn := 45
-@export var manual_wheelchair_speed := 800
+@export var manual_wheelchair_speed := 400
+@export var manual_speed_multiplier := 0.0
 @export var manual_wheelchair_turn_degrees := 10
+@export var manual_wheelchair_turn_request := 0.0
 @export var manual_wheelchair_offset_amount := 20
 @export var power_wheelchair_speed := 300
-@export var power_wheelchair_turn = 90
+@export var power_wheelchair_turn := 90
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAIR}
 
 var current_mode: move_state = move_state.WALKING
-
+var last_manual_speed_multiplier := 0.0
 
 func _debug_change_mode(index: int):
 	current_mode = index as move_state
@@ -119,56 +121,32 @@ func rollator_movement(delta: float):
 	
 	position += vel * delta
 
-func manual_wheelchair_movement(_delta: float):
-	#self.velocity = Vector2.ZERO
-	# gotta have an input for *both* sides!!
-	var rot = 0 # tracking for animation purposes
-	var vel = 0 # tracking for animation purposes
-	if Input.is_action_just_pressed("wheelchair_left_forward"):
-		if Input.is_action_pressed("wheelchair_right_forward"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
-			vel = 1
-		elif Input.is_action_pressed("wheelchair_right_backward"):
-			rotate_with_offset(manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
-			rot = 1
-	elif Input.is_action_just_pressed("wheelchair_left_backward"):
-		if Input.is_action_pressed("wheelchair_right_forward"):
-			rotate_with_offset(-manual_wheelchair_turn_degrees, true, manual_wheelchair_offset_amount)
-			rot = 1
-		elif Input.is_action_pressed("wheelchair_right_backward"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
-			vel = -1
-	elif Input.is_action_just_pressed("wheelchair_right_forward"):
-		if Input.is_action_pressed("wheelchair_left_forward"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed
-			vel = 1
-		elif Input.is_action_pressed("wheelchair_left_backward"):
-			rotate_with_offset(-manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
-			rot = -1
-	elif Input.is_action_just_pressed("wheelchair_right_backward"):
-		if Input.is_action_pressed("wheelchair_left_forward"):
-			rotate_with_offset(manual_wheelchair_turn_degrees, false, manual_wheelchair_offset_amount)
-			rot = -1
-		elif Input.is_action_pressed("wheelchair_left_backward"):
-			self.velocity = Vector2.from_angle(self.rotation).normalized() * manual_wheelchair_speed * -1
-			vel = -1
+func manual_wheelchair_movement(delta: float):
+	# rewrite time!
+	var req_forward = Input.is_action_pressed("wheelchair_left_forward") && Input.is_action_pressed("wheelchair_right_forward")
+	var req_backward = Input.is_action_pressed("wheelchair_left_backward") && Input.is_action_pressed("wheelchair_right_backward")
+	var req_turnright = Input.is_action_pressed("wheelchair_left_forward") && Input.is_action_pressed("wheelchair_right_backward")
+	var req_turnleft = Input.is_action_pressed("wheelchair_left_backward") && Input.is_action_pressed("wheelchair_right_forward")
+	var newInput = Input.is_action_just_pressed("wheelchair_left_forward") ||  Input.is_action_just_pressed("wheelchair_right_forward") || Input.is_action_just_pressed("wheelchair_left_backward") || Input.is_action_just_pressed("wheelchair_right_backward")
 	
-	if vel != 0:
-		if vel > 0:
-			play_or_continue_animation("anim_manual_forward")
-		else: 
-			play_or_continue_animation("anim_manual_backward")
-	elif rot != 0:
-		if rot > 0:
-			play_or_continue_animation("anim_manual_turn_right")
-		else:
-			play_or_continue_animation("anim_manual_turn_left")
+	if newInput:
+		if req_forward:
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play_with_capture("manual_forward")
+		elif req_backward:
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play_with_capture("manual_backward")
+		elif req_turnright:
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play_with_capture("manual_right")
+		elif req_turnleft:
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play_with_capture("manual_left")
 	else:
-		play_or_continue_animation("anim_manual_idle")
-	
-	self.velocity *= 0.8
-	if self.velocity.length() < 30:
-		self.velocity = Vector2.ZERO
+		if !$AnimationPlayer.is_playing():
+			$AnimationPlayer.play("manual_idle")
+	self.rotation_degrees += manual_wheelchair_turn_request * delta * manual_wheelchair_turn_degrees
+	self.position += Vector2.RIGHT.rotated(self.rotation).normalized() * delta * manual_speed_multiplier * manual_wheelchair_speed
 
 func power_wheelchair_movement(delta: float):
 	# essentially fancy wasd tank controls

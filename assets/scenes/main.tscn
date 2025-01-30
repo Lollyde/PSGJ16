@@ -8,9 +8,10 @@
 
 [node name="player" parent="." instance=ExtResource("1_r8ihg")]
 z_index = 1
-position = Vector2(-505, -569)
+position = Vector2(1118, 292)
 crutches_turn_degrees = 22
 crutches_offset_amount = 80
+manual_wheelchair_turn_degrees = 90
 
 [node name="placeholder_place" parent="." instance=ExtResource("3_ufahv")]
 position = Vector2(587, 294)

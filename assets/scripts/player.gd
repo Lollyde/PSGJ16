@@ -70,15 +70,27 @@ func crutches_movement(_delta: float):
 	# rotate by turn_degrees amount
 	# move back by offset_amount 
 	
+	
+	
 	self.velocity = Vector2.ZERO
 	if Input.is_action_just_pressed("crutch_right_forward"):
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("crutches_right_forward")
 		rotate_with_offset(-crutches_turn_degrees, false, crutches_offset_amount)
 	elif Input.is_action_just_pressed("crutch_left_forward"):
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("crutches_left_forward")
 		rotate_with_offset(crutches_turn_degrees, true, crutches_offset_amount)
 	elif Input.is_action_just_pressed("crutch_right_backward"):
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("crutches_right_backward")
 		rotate_with_offset(crutches_turn_degrees, false, crutches_offset_amount)
 	elif Input.is_action_just_pressed("crutch_left_backward"):
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("crutches_left_backward")	
 		rotate_with_offset(-crutches_turn_degrees, true, crutches_offset_amount)
+	#else:
+		#$AnimationPlayer.play("crutches_idle")
 
 func rollator_movement(delta: float):
 	
@@ -145,7 +157,7 @@ func manual_wheelchair_movement(delta: float):
 	else:
 		if !$AnimationPlayer.is_playing():
 			$AnimationPlayer.play("manual_idle")
-	self.rotation_degrees += manual_wheelchair_turn_request * delta * manual_wheelchair_turn_degrees
+	#self.rotation_degrees += manual_wheelchair_turn_request * delta * manual_wheelchair_turn_degrees
 	self.position += Vector2.RIGHT.rotated(self.rotation).normalized() * delta * manual_speed_multiplier * manual_wheelchair_speed
 
 func power_wheelchair_movement(delta: float):

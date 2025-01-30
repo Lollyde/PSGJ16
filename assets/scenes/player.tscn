@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://csa6rhqa5ls3p"]
+[gd_scene load_steps=51 format=3 uid="uid://csa6rhqa5ls3p"]
 
 [ext_resource type="Script" path="res://assets/scripts/player.gd" id="1_kbhbp"]
 [ext_resource type="Texture2D" uid="uid://dpt62lru47e4h" path="res://assets/textures/SpriteSheet.png" id="2_a6t51"]
@@ -459,57 +459,17 @@ tracks/1/keys = {
 "update": 1,
 "values": [&"anim_manual_forward", &"anim_manual_idle"]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/path = NodePath(".")
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:manual_wheelchair_turn_request")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"reset_manual"
-}]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:manual_wheelchair_turn_request")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_41q7f"]
-resource_name = "manual_stop"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:manual_speed_progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
 }
 
 [sub_resource type="Animation" id="Animation_34q2g"]
@@ -678,8 +638,7 @@ _data = {
 "manual_forward": SubResource("Animation_qv3mm"),
 "manual_idle": SubResource("Animation_m4ylc"),
 "manual_left": SubResource("Animation_ylm8r"),
-"manual_right": SubResource("Animation_34q2g"),
-"manual_stop": SubResource("Animation_41q7f")
+"manual_right": SubResource("Animation_34q2g")
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D"]

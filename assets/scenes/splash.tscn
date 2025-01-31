@@ -167,7 +167,7 @@ offset_right = 422.5
 offset_bottom = 96.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-text = "This Game Has No Name"
+text = "Your Wheels Can Smash"
 label_settings = SubResource("LabelSettings_5fh60")
 horizontal_alignment = 1
 

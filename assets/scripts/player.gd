@@ -17,15 +17,24 @@ extends CharacterBody2D
 @export var power_wheelchair_turn := 90
 
 @export var paused = true
+var game_manager: Node
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-
 enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAIR}
 
 var current_mode: move_state = move_state.WALKING
 var last_manual_speed_multiplier := 0.0
 var last_crutches_direction := 0
 var crutches_currently_turning := false
+
+func set_manager(m: Node):
+	game_manager = m
+	
+func get_manager():
+	return game_manager
+
+func _ready():
+	pause()
 
 func _debug_change_mode(index: int):
 	print("switching to state: " + str(index as move_state))
@@ -249,3 +258,13 @@ func play_or_continue_animation(anim: String):
 	if sprite.animation != anim:
 		#print("switching to anim: " + anim)
 		sprite.play(anim)
+
+
+func pause():
+	self.paused = true
+	$CollisionShape2D.disabled = true
+	
+func unpause():
+	self.paused = false
+	$CollisionShape2D.disabled = false
+	

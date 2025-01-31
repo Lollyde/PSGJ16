@@ -107,7 +107,8 @@ func pickup_enemy(val: int):
 
 func play_pressed() -> void:
 	bgm.play_ambient()
-	player.paused = false
+	player.unpause()
+	player.set_manager(self)
 	splash.queue_free()
 	current_level = 0
 	loadlevel()

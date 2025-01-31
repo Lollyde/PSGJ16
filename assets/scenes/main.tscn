@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://cv2vje03mntt2"]
+[gd_scene load_steps=10 format=3 uid="uid://cv2vje03mntt2"]
 
 [ext_resource type="Script" path="res://assets/scripts/game_manager.gd" id="1_lkbhw"]
 [ext_resource type="PackedScene" uid="uid://csa6rhqa5ls3p" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
+[ext_resource type="PackedScene" uid="uid://u7ue1b8y0bu4" path="res://assets/scenes/level1.tscn" id="3_kymti"]
 [ext_resource type="PackedScene" uid="uid://bh67wnmi414a" path="res://assets/scenes/debug_ui.tscn" id="3_lppys"]
 [ext_resource type="PackedScene" uid="uid://ddfstxwlh5srh" path="res://assets/scenes/HUD.tscn" id="4_62hqu"]
-[ext_resource type="PackedScene" uid="uid://c7j2cr2dnor4h" path="res://assets/scenes/joy_small.tscn" id="5_vh2ci"]
-[ext_resource type="PackedScene" uid="uid://bsedx8ueh7jxr" path="res://assets/scenes/joy_big.tscn" id="6_76en3"]
-[ext_resource type="PackedScene" uid="uid://bn377mhfs27js" path="res://assets/scenes/enemy.tscn" id="8_mefjt"]
+[ext_resource type="PackedScene" uid="uid://b2ik1wjxktnwq" path="res://assets/scenes/level2.tscn" id="4_mkiat"]
+[ext_resource type="PackedScene" uid="uid://cjqfei0fuq8o2" path="res://assets/scenes/level3.tscn" id="5_yario"]
+[ext_resource type="PackedScene" uid="uid://x0ynv7vbqfc0" path="res://assets/scenes/level4.tscn" id="6_r786i"]
+[ext_resource type="PackedScene" uid="uid://bg26dd8agjab7" path="res://assets/scenes/level5.tscn" id="7_t3wia"]
 
 [node name="main" type="Node"]
 
@@ -19,7 +21,23 @@ script = ExtResource("1_lkbhw")
 [node name="spoons_timer" type="Timer" parent="GameManager"]
 autostart = true
 
+[node name="Level1" parent="." instance=ExtResource("3_kymti")]
+visible = false
+
+[node name="Level2" parent="." instance=ExtResource("4_mkiat")]
+visible = false
+
+[node name="Level3" parent="." instance=ExtResource("5_yario")]
+visible = false
+
+[node name="Level4" parent="." instance=ExtResource("6_r786i")]
+visible = false
+
+[node name="Level5" parent="." instance=ExtResource("7_t3wia")]
+visible = false
+
 [node name="player" parent="." instance=ExtResource("1_r8ihg")]
+unique_name_in_owner = true
 z_index = 1
 position = Vector2(1118, 292)
 crutches_turn_degrees = 5
@@ -27,14 +45,5 @@ manual_wheelchair_speed = 600
 manual_wheelchair_turn_degrees = 90
 
 [node name="debug_ui" parent="." instance=ExtResource("3_lppys")]
-
-[node name="joy_big" parent="." instance=ExtResource("6_76en3")]
-position = Vector2(270, 342)
-
-[node name="joy_small" parent="." instance=ExtResource("5_vh2ci")]
-position = Vector2(528, 372)
-
-[node name="Area2D" parent="." instance=ExtResource("8_mefjt")]
-position = Vector2(745, 386)
 
 [connection signal="timeout" from="GameManager/spoons_timer" to="GameManager" method="_on_spoons_timeout"]

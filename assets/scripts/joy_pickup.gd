@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var joy_amount := 50
+var joy_amount := 30
 @onready var game_manager: Node = %GameManager
 
 func _on_body_entered(body: Node2D) -> void:

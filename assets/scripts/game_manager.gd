@@ -22,3 +22,7 @@ func _on_spoons_timeout() -> void:
 func pickup_joy(val: int):
 	joy += val
 	hud.set_happy(joy)
+
+func pickup_enemy(val: int):
+	spoons -= val
+	hud.set_energy(spoons)

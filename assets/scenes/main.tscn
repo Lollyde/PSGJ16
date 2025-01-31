@@ -11,6 +11,7 @@
 z_index = 1
 position = Vector2(1118, 292)
 crutches_turn_degrees = 5
+manual_wheelchair_speed = 600
 manual_wheelchair_turn_degrees = 90
 
 [node name="placeholder_place" parent="." instance=ExtResource("3_ufahv")]

@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cv2vje03mntt2"]
+[gd_scene load_steps=5 format=3 uid="uid://cv2vje03mntt2"]
 
 [ext_resource type="PackedScene" uid="uid://csa6rhqa5ls3p" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
-[ext_resource type="Script" path="res://assets/scripts/player_points.gd" id="3_7d6ba"]
 [ext_resource type="PackedScene" uid="uid://bh67wnmi414a" path="res://assets/scenes/debug_ui.tscn" id="3_lppys"]
-[ext_resource type="PackedScene" uid="uid://koetlr64cs5i" path="res://assets/scenes/placeholder_place.tscn" id="3_ufahv"]
 [ext_resource type="PackedScene" uid="uid://ddfstxwlh5srh" path="res://assets/scenes/HUD.tscn" id="4_62hqu"]
-[ext_resource type="Script" path="res://assets/scripts/progress_bars.gd" id="6_ypb5q"]
+[ext_resource type="PackedScene" uid="uid://u7ue1b8y0bu4" path="res://assets/scenes/level1.tscn" id="6_oa5bi"]
 
 [node name="main" type="Node"]
 
@@ -16,16 +14,8 @@ crutches_turn_degrees = 22
 crutches_offset_amount = 80
 manual_wheelchair_turn_degrees = 90
 
-[node name="placeholder_place" parent="." instance=ExtResource("3_ufahv")]
-position = Vector2(587, 294)
-
-[node name="points_system" type="Node" parent="."]
-script = ExtResource("3_7d6ba")
-
 [node name="debug_ui" parent="." instance=ExtResource("3_lppys")]
 
 [node name="HUD" parent="." instance=ExtResource("4_62hqu")]
-script = ExtResource("6_ypb5q")
 
-[connection signal="energy_update" from="points_system" to="HUD" method="update_energy_bar"]
-[connection signal="happy_update" from="points_system" to="HUD" method="update_happy_bar"]
+[node name="Node2D" parent="." instance=ExtResource("6_oa5bi")]

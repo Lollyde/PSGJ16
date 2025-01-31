@@ -162,7 +162,7 @@ offset_right = 532.0
 offset_bottom = 68.0
 theme_override_styles/background = SubResource("StyleBoxFlat_0io8q")
 theme_override_styles/fill = SubResource("StyleBoxFlat_dail5")
-value = 20.0
+value = 69.0
 show_percentage = false
 
 [node name="energy_bar" type="ProgressBar" parent="Bars/ProgressBars"]
@@ -177,7 +177,9 @@ offset_bottom = -23.0
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_0io8q")
 theme_override_styles/fill = SubResource("StyleBoxFlat_prcdg")
-value = 82.0
+max_value = 180.0
+step = 1.0
+value = 20.0
 show_percentage = false
 
 [node name="InfoBar" type="Panel" parent="Bars"]
@@ -201,7 +203,7 @@ offset_top = -48.0
 offset_right = 518.0
 offset_bottom = 48.0
 grow_vertical = 2
-text = "q w e a d z x c"
+text = "q a o l"
 label_settings = SubResource("LabelSettings_ge3fv")
 horizontal_alignment = 1
 vertical_alignment = 1

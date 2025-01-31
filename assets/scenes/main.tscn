@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://assets/scripts/game_manager.gd" id="1_lkbhw"]
 [ext_resource type="PackedScene" uid="uid://csa6rhqa5ls3p" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
 [ext_resource type="PackedScene" uid="uid://bh67wnmi414a" path="res://assets/scenes/debug_ui.tscn" id="3_lppys"]
-[ext_resource type="PackedScene" uid="uid://koetlr64cs5i" path="res://assets/scenes/placeholder_place.tscn" id="3_ufahv"]
 [ext_resource type="PackedScene" uid="uid://ddfstxwlh5srh" path="res://assets/scenes/HUD.tscn" id="4_62hqu"]
 [ext_resource type="PackedScene" uid="uid://c7j2cr2dnor4h" path="res://assets/scenes/joy_small.tscn" id="5_vh2ci"]
 [ext_resource type="PackedScene" uid="uid://bsedx8ueh7jxr" path="res://assets/scenes/joy_big.tscn" id="6_76en3"]
@@ -26,9 +25,6 @@ position = Vector2(1118, 292)
 crutches_turn_degrees = 5
 manual_wheelchair_speed = 600
 manual_wheelchair_turn_degrees = 90
-
-[node name="placeholder_place" parent="." instance=ExtResource("3_ufahv")]
-position = Vector2(587, 294)
 
 [node name="debug_ui" parent="." instance=ExtResource("3_lppys")]
 

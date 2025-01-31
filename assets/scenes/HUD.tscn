@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://ddfstxwlh5srh"]
+[gd_scene load_steps=14 format=3 uid="uid://ddfstxwlh5srh"]
 
+[ext_resource type="Script" path="res://assets/scripts/hud.gd" id="1_2sx3b"]
 [ext_resource type="Texture2D" uid="uid://ddilf6c14vh3p" path="res://assets/textures/icon_happy_face2.svg" id="1_hky06"]
 [ext_resource type="Texture2D" uid="uid://b3kg03v3e5b2t" path="res://assets/textures/icon_electric_bolt.svg" id="2_b0ncn"]
 [ext_resource type="FontFile" uid="uid://b27oj5irukw3e" path="res://assets/fonts/Itim-Regular.ttf" id="3_pcufw"]
@@ -100,6 +101,7 @@ font_size = 40
 font_color = Color(0.4992, 0.522667, 0.64, 1)
 
 [node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_2sx3b")
 
 [node name="Bars" type="Control" parent="."]
 layout_mode = 3

@@ -1,21 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://cv2vje03mntt2"]
+[gd_scene load_steps=9 format=3 uid="uid://cv2vje03mntt2"]
 
+[ext_resource type="Script" path="res://assets/scripts/game_manager.gd" id="1_lkbhw"]
 [ext_resource type="PackedScene" uid="uid://csa6rhqa5ls3p" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
 [ext_resource type="PackedScene" uid="uid://bh67wnmi414a" path="res://assets/scenes/debug_ui.tscn" id="3_lppys"]
 [ext_resource type="PackedScene" uid="uid://ddfstxwlh5srh" path="res://assets/scenes/HUD.tscn" id="4_62hqu"]
-[ext_resource type="PackedScene" uid="uid://u7ue1b8y0bu4" path="res://assets/scenes/level1.tscn" id="6_oa5bi"]
+[ext_resource type="PackedScene" uid="uid://c7j2cr2dnor4h" path="res://assets/scenes/joy_small.tscn" id="5_vh2ci"]
+[ext_resource type="PackedScene" uid="uid://bsedx8ueh7jxr" path="res://assets/scenes/joy_big.tscn" id="6_76en3"]
+[ext_resource type="PackedScene" uid="uid://bn377mhfs27js" path="res://assets/scenes/enemy.tscn" id="8_mefjt"]
 
 [node name="main" type="Node"]
+
+[node name="HUD" parent="." instance=ExtResource("4_62hqu")]
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_lkbhw")
+
+[node name="spoons_timer" type="Timer" parent="GameManager"]
+autostart = true
 
 [node name="player" parent="." instance=ExtResource("1_r8ihg")]
 z_index = 1
 position = Vector2(1118, 292)
-crutches_turn_degrees = 22
-crutches_offset_amount = 80
+crutches_turn_degrees = 5
+manual_wheelchair_speed = 600
 manual_wheelchair_turn_degrees = 90
 
 [node name="debug_ui" parent="." instance=ExtResource("3_lppys")]
 
-[node name="HUD" parent="." instance=ExtResource("4_62hqu")]
+[node name="joy_big" parent="." instance=ExtResource("6_76en3")]
+position = Vector2(270, 342)
 
-[node name="Node2D" parent="." instance=ExtResource("6_oa5bi")]
+[node name="joy_small" parent="." instance=ExtResource("5_vh2ci")]
+position = Vector2(528, 372)
+
+[node name="Area2D" parent="." instance=ExtResource("8_mefjt")]
+position = Vector2(745, 386)
+
+[connection signal="timeout" from="GameManager/spoons_timer" to="GameManager" method="_on_spoons_timeout"]

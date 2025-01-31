@@ -16,6 +16,8 @@ extends CharacterBody2D
 @export var power_wheelchair_speed := 300
 @export var power_wheelchair_turn := 90
 
+@export var paused = true
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 enum move_state {WALKING, CRUTCHES, ROLLATOR, MANUAL_WHEELCHAIR, POWER_WHEELCHAIR}
@@ -44,6 +46,8 @@ func change_mode(index: int):
 			sprite.play("anim_power_idle")
 
 func _physics_process(delta: float) -> void:
+	if paused:
+		return
 	match current_mode:
 		move_state.WALKING:
 			walking_movement(delta)

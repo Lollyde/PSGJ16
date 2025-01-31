@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://berors100qrt8"]
+[gd_scene load_steps=9 format=3 uid="uid://berors100qrt8"]
 
+[ext_resource type="Script" path="res://assets/scenes/splash.gd" id="1_j2yt4"]
 [ext_resource type="FontFile" uid="uid://b27oj5irukw3e" path="res://assets/fonts/Itim-Regular.ttf" id="1_rj52o"]
 [ext_resource type="Texture2D" uid="uid://b46ea88i3fb8c" path="res://assets/textures/icons/icon_play.svg" id="2_enw71"]
 [ext_resource type="StyleBox" uid="uid://pcl26cf2mavr" path="res://assets/textures/bar_background.tres" id="3_vmpih"]
 [ext_resource type="StyleBox" uid="uid://b6wg2l80qmj8n" path="res://assets/textures/blue_slider.tres" id="4_c23ab"]
+[ext_resource type="Script" path="res://assets/scenes/volume_slider.gd" id="5_viloi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qqvp6"]
 bg_color = Color(0.929412, 0.866667, 0.733333, 1)
@@ -13,7 +15,8 @@ font = ExtResource("1_rj52o")
 font_size = 70
 font_color = Color(0.929412, 0.866667, 0.733333, 1)
 
-[node name="Node2D" type="Node2D"]
+[node name="splash" type="Node2D"]
+script = ExtResource("1_j2yt4")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -104,7 +107,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -50.0
+offset_top = -6.0
 offset_right = 200.0
 offset_bottom = 50.0
 grow_horizontal = 2
@@ -113,3 +116,7 @@ theme_override_styles/slider = ExtResource("3_vmpih")
 theme_override_styles/grabber_area = ExtResource("4_c23ab")
 value = 40.0
 rounded = true
+script = ExtResource("5_viloi")
+
+[connection signal="pressed" from="Control/Play/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="value_changed" from="Control/Volume/volume_slider" to="Control/Volume/volume_slider" method="_on_value_changed"]

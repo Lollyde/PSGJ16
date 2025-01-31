@@ -9,6 +9,7 @@ script = ExtResource("1_vk85w")
 
 [node name="Title" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_4bnti")
+autoplay = true
 
 [node name="Ambience" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_ae5wg")

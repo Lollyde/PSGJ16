@@ -8,11 +8,6 @@ extends Node
 func _ready() -> void:
 	pass # Replace with function body.
 
-
-func play_title():
-	ambience.stop()
-	title.stop()
-	title.play()
 	
 func play_ambient():
 	ambience.stop()

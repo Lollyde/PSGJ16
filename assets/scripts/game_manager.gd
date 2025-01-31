@@ -10,6 +10,9 @@ extends Node
 @onready var level_3: Node2D = $"../Level3"
 @onready var level_4: Node2D = $"../Level4"
 @onready var level_5: Node2D = $"../Level5"
+@onready var spoons_timer: Timer = $spoons_timer
+@onready var splash: Node2D = $"../Node2D"
+@onready var bgm: Node = $"../BGM"
 
 var current_level = 1
 
@@ -26,8 +29,10 @@ func _ready():
 	hud.set_max_happy(max_joy)
 	hud.set_energy(max_spoons)
 	hud.set_happy(0)
-	player.global_position = level_1.get_spawn()
-	level_1.visible = true
+	hud.visible = false
+	player.paused = true
+	player.visible = false
+	level_1.set_process(false)
 	level_2.set_process(false)
 	level_3.set_process(false)
 	level_4.set_process(false)
@@ -35,6 +40,8 @@ func _ready():
 	
 	
 func loadlevel():
+	spoons_timer.start()
+	hud.set_level("Level " + str(current_level))
 	spoons = max_spoons
 	joy = 0
 	level_1.set_process(false)
@@ -47,28 +54,36 @@ func loadlevel():
 	level_3.visible = false
 	level_4.visible = false
 	level_5.visible = false
+	hud.visible = true
+	player.visible = true
+	player.paused = false
 	player.change_mode(current_level)
 	match current_level:
-		1:
+		0:
 			level_1.visible = true
 			level_1.set_process(true)
 			player.global_position = level_1.get_spawn()
-		2:
+			hud.set_keys("WASD")
+		1:
 			level_2.visible = true
 			level_2.set_process(true)
 			player.global_position = level_2.get_spawn()
-		3:
+			hud.set_keys("ED  IK")
+		2:
 			level_3.visible = true
 			level_3.set_process(true)
 			player.global_position = level_3.get_spawn()
-		4:
+			hud.set_keys("FV  JM")
+		3:
 			level_4.visible = true
 			level_4.set_process(true)
 			player.global_position = level_4.get_spawn()
-		5:
+			hud.set_keys("QA  OP")
+		4:
 			level_5.visible = true
 			level_5.set_process(true)
 			player.global_position = level_5.get_spawn()
+			hud.set_keys("QWE A D ZXC")
 
 func _on_spoons_timeout() -> void:
 	spoons -= 1
@@ -89,5 +104,11 @@ func pickup_enemy(val: int):
 	spoons -= val
 	hud.set_energy(spoons)
 
-func change_level(level: int):
-	pass
+
+func play_pressed() -> void:
+	bgm.play_ambient()
+	player.paused = false
+	splash.queue_free()
+	current_level = 0
+	loadlevel()
+	pass # Replace with function body.

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cv2vje03mntt2"]
+[gd_scene load_steps=12 format=3 uid="uid://cv2vje03mntt2"]
 
 [ext_resource type="Script" path="res://assets/scripts/game_manager.gd" id="1_lkbhw"]
 [ext_resource type="PackedScene" uid="uid://csa6rhqa5ls3p" path="res://assets/scenes/player.tscn" id="1_r8ihg"]
+[ext_resource type="PackedScene" uid="uid://berors100qrt8" path="res://assets/scenes/splash.tscn" id="2_i338l"]
 [ext_resource type="PackedScene" uid="uid://u7ue1b8y0bu4" path="res://assets/scenes/level1.tscn" id="3_kymti"]
 [ext_resource type="PackedScene" uid="uid://bh67wnmi414a" path="res://assets/scenes/debug_ui.tscn" id="3_lppys"]
 [ext_resource type="PackedScene" uid="uid://ddfstxwlh5srh" path="res://assets/scenes/HUD.tscn" id="4_62hqu"]
@@ -9,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cjqfei0fuq8o2" path="res://assets/scenes/level3.tscn" id="5_yario"]
 [ext_resource type="PackedScene" uid="uid://x0ynv7vbqfc0" path="res://assets/scenes/level4.tscn" id="6_r786i"]
 [ext_resource type="PackedScene" uid="uid://bg26dd8agjab7" path="res://assets/scenes/level5.tscn" id="7_t3wia"]
+[ext_resource type="PackedScene" uid="uid://bvh0nvhpslqj8" path="res://assets/scenes/bgm.tscn" id="11_8fbhi"]
 
 [node name="main" type="Node"]
 
@@ -19,7 +21,6 @@ unique_name_in_owner = true
 script = ExtResource("1_lkbhw")
 
 [node name="spoons_timer" type="Timer" parent="GameManager"]
-autostart = true
 
 [node name="Level1" parent="." instance=ExtResource("3_kymti")]
 visible = false
@@ -45,5 +46,13 @@ manual_wheelchair_speed = 600
 manual_wheelchair_turn_degrees = 90
 
 [node name="debug_ui" parent="." instance=ExtResource("3_lppys")]
+visible = false
+
+[node name="Node2D" parent="." instance=ExtResource("2_i338l")]
+position = Vector2(-323, -794)
+scale = Vector2(2, 2)
+
+[node name="BGM" parent="." instance=ExtResource("11_8fbhi")]
 
 [connection signal="timeout" from="GameManager/spoons_timer" to="GameManager" method="_on_spoons_timeout"]
+[connection signal="play" from="Node2D" to="GameManager" method="play_pressed"]

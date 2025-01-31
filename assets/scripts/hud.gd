@@ -21,3 +21,7 @@ func set_keys(val: String):
 	
 func set_level(val: String):
 	current_level.text = val
+
+
+func play_pressed() -> void:
+	pass # Replace with function body.

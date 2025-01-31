@@ -17,25 +17,29 @@
 [node name="HUD" parent="." instance=ExtResource("4_62hqu")]
 
 [node name="GameManager" type="Node" parent="."]
-unique_name_in_owner = true
 script = ExtResource("1_lkbhw")
 
 [node name="spoons_timer" type="Timer" parent="GameManager"]
 
 [node name="Level1" parent="." instance=ExtResource("3_kymti")]
 visible = false
+position = Vector2(5889, 9498)
 
 [node name="Level2" parent="." instance=ExtResource("4_mkiat")]
 visible = false
+position = Vector2(12595, 695)
 
 [node name="Level3" parent="." instance=ExtResource("5_yario")]
 visible = false
+position = Vector2(-12746, 8578)
 
 [node name="Level4" parent="." instance=ExtResource("6_r786i")]
 visible = false
+position = Vector2(-13441, -272)
 
 [node name="Level5" parent="." instance=ExtResource("7_t3wia")]
 visible = false
+position = Vector2(1439, -8374)
 
 [node name="player" parent="." instance=ExtResource("1_r8ihg")]
 unique_name_in_owner = true
@@ -49,7 +53,7 @@ manual_wheelchair_turn_degrees = 90
 visible = false
 
 [node name="Node2D" parent="." instance=ExtResource("2_i338l")]
-position = Vector2(-323, -794)
+position = Vector2(-312, -783)
 scale = Vector2(2, 2)
 
 [node name="BGM" parent="." instance=ExtResource("11_8fbhi")]

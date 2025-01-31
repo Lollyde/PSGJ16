@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvh0nvhpslqj8"]
+
+[ext_resource type="AudioStream" uid="uid://bxhqoajc0a86x" path="res://assets/audio/title final.ogg" id="1_4bnti"]
+[ext_resource type="Script" path="res://assets/scripts/bgm.gd" id="1_vk85w"]
+[ext_resource type="AudioStream" uid="uid://sfcfcskba2xb" path="res://assets/audio/ambience final.ogg" id="2_ae5wg"]
+
+[node name="BGM" type="Node"]
+script = ExtResource("1_vk85w")
+
+[node name="Title" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_4bnti")
+
+[node name="Ambience" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ae5wg")
